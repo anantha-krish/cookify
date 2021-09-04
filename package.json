@@ -1,0 +1,32 @@
+{
+  "name": "cookify",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anantha-krish/cookify.git"
+  },
+  "keywords": [
+    "JS"
+  ],
+  "author": "Anantha Krishnan M",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anantha-krish/cookify/issues"
+  },
+  "homepage": "https://github.com/anantha-krish/cookify#readme",
+  "devDependencies": {
+    "@parcel/transformer-image": "^2.0.0-rc.0",
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "parcel": "^2.0.0-rc.0"
+  },
+  "dependencies": {
+    "core-js": "^3.17.2",
+    "fractional": "^1.0.0",
+    "regenerator-runtime": "^0.13.9"
+  }
+}

@@ -1,14 +1,20 @@
 import icons from 'url:../../img/icons.svg';
 import { Fraction } from 'fractional';
 import View from './View';
+import { state } from '../model';
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _data;
   _message = 'Start by searching for a recipe or an ingredient. Have fun!';
   _errorMsg =
     "We don't receipe for the searched item. Please try another recipe.";
-
-
+  addServingsUpdateHandler(handler) {
+    this._parentElement.addEventListener('click', e => {
+      const servBtn = e.target.closest('.btn--tiny');
+      const newServings = +servBtn.dataset.updateTo;
+      if (newServings > 0) handler(newServings);
+    });
+  }
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -40,12 +46,16 @@ class RecipeView extends View {
         <span class="recipe__info-text">servings</span>
     
         <div class="recipe__info-buttons">
-          <button class="btn--tiny btn--increase-servings">
+          <button data-update-to=${
+            state.recipe.servings - 1
+          } class="btn--tiny btn--increase-servings">
             <svg>
               <use href="${icons}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button class="btn--tiny btn--increase-servings">
+          <button data-update-to=${
+            state.recipe.servings + 1
+          } class="btn--tiny btn--increase-servings">
             <svg>
               <use href="${icons}#icon-plus-circle"></use>
             </svg>

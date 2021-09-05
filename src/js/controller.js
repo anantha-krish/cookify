@@ -16,12 +16,14 @@ if (module.hot) {
 }
 
 const controlRecipes = async () => {
+  recipeView.renderMessage();
   const id = window.location.hash.slice(1);
   if (!id) return;
   recipeView.renderSpinner();
   try {
     await model.loadRecipe(id);
     // since imports have live connection, it will be updated
+    resultView.update(model.getResultPerPage());
     recipeView.render(model.state.recipe);
   } catch (err) {
     recipeView.renderErrorMsg();
@@ -43,9 +45,13 @@ const controlPagination = page => {
   resultView.render(model.getResultPerPage(page));
   paginationView.render(model.state.search);
 };
-
+const controlUpdateServings = newServings => {
+  model.updateServings(newServings);
+  recipeView.update(model.state.recipe);
+};
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addServingsUpdateHandler(controlUpdateServings);
   searchView.addSearchHandler(controlSearchRecipe);
   paginationView.addPaginationHandler(controlPagination);
 };

@@ -4,6 +4,7 @@ import * as model from './model.js';
 import paginationView from './views/paginationView.js';
 import recipeView from './views/recipeView.js';
 import resultView from './views/resultView.js';
+import bookmarksView from './views/bookmarksView.js';
 import searchView from './views/searchView.js';
 const recipeContainer = document.querySelector('.recipe');
 
@@ -25,6 +26,7 @@ const controlRecipes = async () => {
     // since imports have live connection, it will be updated
     resultView.update(model.getResultPerPage());
     recipeView.render(model.state.recipe);
+    bookmarksView.update(model.state.bookmarks);
   } catch (err) {
     recipeView.renderErrorMsg();
   }
@@ -49,9 +51,22 @@ const controlUpdateServings = newServings => {
   model.updateServings(newServings);
   recipeView.update(model.state.recipe);
 };
+const controlAddBookmark = () => {
+  const isBookmarked = model.state.recipe.bookmarked;
+  if (!isBookmarked) model.addBookMark(model.state.recipe);
+  else model.deleteBookMark(model.state.recipe.id);
+  recipeView.update(model.state.recipe);
+  bookmarksView.render(model.state.bookmarks);
+};
+const controlBookmarks = () => {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 const init = () => {
+  bookmarksView.addLoadHandler(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addServingsUpdateHandler(controlUpdateServings);
+  recipeView.addBookmarkHandler(controlAddBookmark);
   searchView.addSearchHandler(controlSearchRecipe);
   paginationView.addPaginationHandler(controlPagination);
 };

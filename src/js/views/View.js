@@ -1,6 +1,16 @@
 import icons from 'url:../../img/icons.svg';
+
 export default class View {
   _data;
+
+/**
+ * Function to render the component
+ * @param {Object | Object[]} data to be rendered in DOM
+ * @param {Boolean} [render] if false, will not render in DOM
+ * @returns {undefined | String} markup
+ * @this {Object} View Instance
+ * @author Anantha Krishnan
+ */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderErrorMsg();
